@@ -9,10 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Luan
  * Represents a parsed LAS File, containing the most common attributes, 
  * as well as a list of the logs that are stored in the represented LAS File.
+ * @author Luan
  */
 public class ParsedLAS 
 {
