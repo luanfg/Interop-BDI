@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package petrofacies.model.stratigraphicmodel;
+package interop.model.stratigraphicmodel;
 
-import petrofacies.model.IAttribute;
+import interop.model.IAttribute;
 
 /**
  *

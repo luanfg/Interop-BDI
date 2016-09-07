@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package petrofacies.control;
+package interop.log.model.util;
 
+import interop.log.model.LogValuePair;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,11 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import petrofacies.log.ParsedLAS;
-import petrofacies.log.WellLog;
+import interop.log.model.ParsedLAS;
+import interop.log.model.WellLog;
 
 /**
- *
+ * This is a simple LAS Log File parser. The method parseLas is the one responsible 
+ * to parse a .las file.
+ * For now, supports only non-wrapped files from the version 2.0.
  * @author Luan
  */
 public class LASParser 
@@ -32,6 +35,12 @@ public class LASParser
         private ParsedLAS parsedLAS = new ParsedLAS();
         private List<WellLog> logsList = new ArrayList<>();
     
+    /** Parses a .LAS file, without any kind of validation. Thus, if the .las is
+     * not structured exactly according to a LAS file definition, the file could not be
+     * parsed.
+    *@param pathFile String containing the path to a .las file.
+    *@return A ParsedLAS instance, containing the most useful attributes of a LAS.
+    */
     public ParsedLAS parseLAS(String pathFile)
     {
         
@@ -117,7 +126,13 @@ public class LASParser
         if(line.startsWith("VERS."))
         {
             if(line.contains("2.0"))
-                 System.out.println("Versão: 2.0 - Tratar exceção aqui");
+            {
+                this.parsedLAS.setVersion("2.0");
+            }
+            else
+            {
+                System.out.println("Version not supported yet.");
+            }
         }
         
         if(line.startsWith("WRAP."))
@@ -221,12 +236,12 @@ public class LASParser
         line = line.trim();
         String[] splitLine;
         
+        //DEPTH or TIME informations are not used yet.
         if(line.startsWith("DEPT"))
         {
             splitLine = line.split("\\.",2);
             String[] temp = splitLine[1].split(" ",2);
             String measureUnity = temp[0];
-            System.out.println("Medida do depth: " + measureUnity);
         }else
         {
             if(line.startsWith("TIME"))
@@ -234,7 +249,6 @@ public class LASParser
                 splitLine = line.split("\\.",2);
                 String[] temp = splitLine[1].split(" ",2);
                 String measureUnity = temp[0];
-                System.out.println("medida do time: " + measureUnity);
             }else
             {
                 splitLine = line.split("\\.",2);
@@ -246,6 +260,7 @@ public class LASParser
 
                 WellLog newLog = new WellLog();
                 
+                newLog.setNullValue(this.parsedLAS.getNullValue());
                 newLog.setLogType(logType);
                 newLog.setLogDescription(logDescription);
                 newLog.setLogMeasureUnit(logMeasureUnit);
@@ -285,8 +300,13 @@ public class LASParser
 
         for(int i = 0; i < logsList.size(); i++)
         {
-            logsList.get(i).getDepthValues().add(Float.parseFloat(splitLine[0]));
-            logsList.get(i).getLogValues().add(Float.parseFloat(splitLine[i+1]));
+           
+            float depth = Float.parseFloat(splitLine[0]);
+            float logValue = Float.parseFloat(splitLine[i+1]);
+            LogValuePair logValuePair = new LogValuePair(depth, logValue);
+            logsList.get(i).addLogValuePair(logValuePair);
+
         }
+        this.parsedLAS.setLogsList(this.logsList);
     }
 }

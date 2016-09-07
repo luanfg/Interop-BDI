@@ -3,12 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package petrofacies.framework;
+package interop.framework;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import interop.log.model.WellLog;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,21 +13,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import org.xml.sax.SAXException;
-import petrofacies.control.LASParser;
-import petrofacies.control.XMLHandler;
-import petrofacies.control.XMLReader;
-import petrofacies.model.stratigraphicmodel.DepositionalFacies;
-import petrofacies.model.stratigraphicmodel.StratigraphicDescription;
+
+import interop.log.model.util.LASParser;
+
 
 /**
  *
  * @author Luan
  */
-public class PetrofaciesFramework extends Application {
+public class InteropFramework extends Application {
     
     @Override
     public void start(Stage primaryStage) {
@@ -51,8 +42,9 @@ public class PetrofaciesFramework extends Application {
             }
         }*/
 
-        LASParser parser = new LASParser();               
-        parser.parseLAS("D:\\Desenvolvimento\\Java Projects\\Petrofacies Framework\\FU128.las");
+        LASParser parser = new LASParser();    
+        parser.parseLAS("FU128.las");
+//        System.out.println(parser.parseLAS("FU128.las").getLogsList().size());
        
         Button btn = new Button();
         btn.setText("Say 'Hello World'");

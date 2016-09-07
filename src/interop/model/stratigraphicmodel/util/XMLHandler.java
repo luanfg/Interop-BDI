@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package petrofacies.control;
+package interop.model.stratigraphicmodel.util;
 
 /**
  *
@@ -14,10 +14,10 @@ import java.util.List;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import petrofacies.model.IDescription;
-import petrofacies.model.stratigraphicmodel.DepositionalFacies;
-import petrofacies.model.stratigraphicmodel.StratigraphicDescription;
-import petrofacies.model.stratigraphicmodel.StratigraphicStructure;
+import interop.model.IDescription;
+import interop.model.stratigraphicmodel.DepositionalFacies;
+import interop.model.stratigraphicmodel.StratigraphicDescription;
+import interop.model.stratigraphicmodel.StratigraphicStructure;
 
 public class XMLHandler extends DefaultHandler 
 {

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package petrofacies.model.stratigraphicmodel;
+package interop.model.stratigraphicmodel;
 
 /**
  *
  * @author Luan
  */
-public class StratigraphicRockColor extends AbstractStratigraphicAttribute
+public class StratigraphicStructure extends AbstractStratigraphicAttribute
 {
 
     @Override

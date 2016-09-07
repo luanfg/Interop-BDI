@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package petrofacies.log;
+package interop.log.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +11,12 @@ import java.util.List;
 /**
  *
  * @author Luan
+ * Represents a parsed LAS File, containing the most common attributes, 
+ * as well as a list of the logs that are stored in the represented LAS File.
  */
 public class ParsedLAS 
 {
+    private String version;
     private float startDepth;
     private String startDepthMeasureUnit;
     private float stopDepth;
@@ -168,5 +171,19 @@ public class ParsedLAS
      */
     public void setStepValueMeasureUnit(String stepValueMeasureUnit) {
         this.stepValueMeasureUnit = stepValueMeasureUnit;
+    }
+
+    /**
+     * @return the version
+     */
+    public String getVersion() {
+        return version;
+    }
+
+    /**
+     * @param version the version to set
+     */
+    public void setVersion(String version) {
+        this.version = version;
     }
 }

@@ -3,17 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package petrofacies.model.stratigraphicmodel;
+package interop.model.stratigraphicmodel;
 
 /**
  *
  * @author Luan
  */
-public class StratigraphicGrainSize extends AbstractStratigraphicAttribute
+public class StratigraphicFossil extends AbstractStratigraphicAttribute
 {
 
     @Override
     protected void updateValue() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }    
+    }
+    
 }
