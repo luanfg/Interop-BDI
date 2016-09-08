@@ -5,6 +5,7 @@
  */
 package interop.framework;
 
+import interop.log.model.ParsedLAS;
 import interop.log.model.WellLog;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -15,6 +16,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import interop.log.util.LASParser;
+import interop.movingMeans.MovingMeans;
 
 
 /**
@@ -43,8 +45,9 @@ public class InteropFramework extends Application {
         }*/
 
         LASParser parser = new LASParser();    
-        parser.parseLAS("FU128.las");
+        ParsedLAS parsed = parser.parseLAS("FU128.las");
 //        System.out.println(parser.parseLAS("FU128.las").getLogsList().size());
+        MovingMeans.apply(parsed.getLogsList().get(0).getLogValues(), 9);
        
         Button btn = new Button();
         btn.setText("Say 'Hello World'");

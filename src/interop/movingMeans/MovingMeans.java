@@ -14,11 +14,11 @@ import interop.log.util.LogValueList;
  */
 public class MovingMeans {
     
-    public LogValueList apply(LogValueList logList, int windowSize){
+    static public LogValueList apply(LogValueList logList, int windowSize){
         LogValueList result = new LogValueList();
         float parSum = 0;
         int inWindow;
-        for(inWindow = 0; inWindow < windowSize/2; inWindow++){
+        for(inWindow = 0; inWindow < windowSize/2-1; inWindow++){
             parSum += logList.get(inWindow).getLogValue();
         }
         for(int i = 0; i < logList.size();i++){
@@ -29,7 +29,8 @@ public class MovingMeans {
             if(i-1-windowSize/2 > 0){
                 parSum -= logList.get(i-1-windowSize/2).getLogValue();
                 inWindow--;
-            };
+            }
+            System.out.println(inWindow + " " + (i+windowSize/2));
             LogValuePair pair = new LogValuePair(logList.get(i).getDepth(), parSum/inWindow);
             result.add(pair);
         }
