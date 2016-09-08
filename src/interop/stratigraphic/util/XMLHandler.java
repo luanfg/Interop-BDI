@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package interop.model.stratigraphicmodel.util;
+package interop.stratigraphic.util;
 
 /**
  *
@@ -15,9 +15,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import interop.model.IDescription;
-import interop.model.stratigraphicmodel.DepositionalFacies;
-import interop.model.stratigraphicmodel.StratigraphicDescription;
-import interop.model.stratigraphicmodel.StratigraphicStructure;
+import interop.stratigraphic.model.DepositionalFacies;
+import interop.stratigraphic.model.StratigraphicDescription;
+import interop.stratigraphic.model.StratigraphicStructure;
 
 public class XMLHandler extends DefaultHandler 
 {

@@ -3,19 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package interop.model.stratigraphicmodel;
+package interop.stratigraphic.model;
 
 /**
  *
  * @author Luan
  */
-public class StratigraphicContact extends AbstractStratigraphicAttribute {
+public class StratigraphicLithology extends AbstractStratigraphicAttribute
+{
 
     @Override
     protected void updateValue() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-
     
 }

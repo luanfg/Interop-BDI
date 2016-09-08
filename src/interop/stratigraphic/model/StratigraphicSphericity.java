@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package interop.model.stratigraphicmodel;
+package interop.stratigraphic.model;
 
 /**
  *
  * @author Luan
  */
-public class StratigraphicFossil extends AbstractStratigraphicAttribute
+public class StratigraphicSphericity extends AbstractStratigraphicAttribute
 {
 
     @Override

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package interop.model.stratigraphicmodel.util;
+package interop.stratigraphic.util;
 
-import interop.model.stratigraphicmodel.util.XMLHandler;
+import interop.stratigraphic.util.XMLHandler;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
-import interop.model.stratigraphicmodel.StratigraphicDescription;
+import interop.stratigraphic.model.StratigraphicDescription;
 
 /**
  *
