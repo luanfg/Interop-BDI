@@ -14,7 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import interop.log.model.util.LASParser;
+import interop.log.util.LASParser;
 
 
 /**

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package interop.log.model.util;
+package interop.log.util;
 
 import interop.log.model.LogValuePair;
 import java.io.BufferedReader;

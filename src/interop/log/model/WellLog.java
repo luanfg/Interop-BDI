@@ -5,7 +5,7 @@
  */
 package interop.log.model;
 
-import interop.log.model.util.LogValueList;
+import interop.log.util.LogValueList;
 import java.util.ArrayList;
 import java.util.List;
 
