@@ -36,7 +36,6 @@ public class MovingMeans {
                 parSum -= logList.get(i-1-windowSize/2).getLogValue();
                 inWindow--;
             }
-            System.out.println(inWindow + " " + (i+windowSize/2));
             // Adiciona à lista de saída o valor da média associado à profundidade do elemento atual (i)
             LogValuePair pair = new LogValuePair(logList.get(i).getDepth(), parSum/inWindow);
             result.add(pair);
