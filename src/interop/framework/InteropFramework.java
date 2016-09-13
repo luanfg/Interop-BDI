@@ -51,14 +51,15 @@ public class InteropFramework extends Application {
 //        System.out.println(parser.parseLAS("FU128.las").getLogsList().size());
         LogValueList oList = parsed.getLogsList().get(0).getLogValues();
         LogValueList nList = MovingMeans.apply(oList, 5);
+        System.out.println(oList.size() == nList.size());
         
-        for(LogValuePair lv : oList){
+        /*for(LogValuePair lv : oList){
             System.out.println(lv.getLogValue());
         }
         System.out.println("------");
         for(LogValuePair lv : nList){
             System.out.println(lv.getLogValue());
-        }
+        }*/
        
         Button btn = new Button();
         btn.setText("Say 'Hello World'");
