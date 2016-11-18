@@ -32,8 +32,8 @@ public class LASParser
         boolean insideParameter = false;
         boolean insideOther = false;
         boolean insideData = false;
-        private ParsedLAS parsedLAS = new ParsedLAS();
-        private List<WellLog> logsList = new ArrayList<>();
+        private ParsedLAS parsedLAS;
+        private List<WellLog> logsList; 
     
     /** Parses a .LAS file, without any kind of validation. Thus, if the .las is
      * not structured exactly according to a LAS file definition, the file could not be
@@ -43,7 +43,8 @@ public class LASParser
     */
     public ParsedLAS parseLAS(String pathFile)
     {
-        
+        parsedLAS = new ParsedLAS();
+        logsList = new ArrayList<>();
         try 
         {
             FileReader fileReader = new FileReader(pathFile);
