@@ -5,6 +5,7 @@
  */
 package interop.stratigraphic.control;
 
+import interop.stratigraphic.model.AttributeType;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,34 +15,62 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * This class is the interface between the database and the model. 
  * @author Luan
  */
 public class SQLite 
 {
-    
-    public void connect()
+   
+    private Connection connect()
     {
-        Connection conn = null;
+       Connection conn = null;
         
-       String dbPath = "jdbc:sqlite:Coreledge.db";
+       String dbPath = "jdbc:sqlite:C:\\StrataDB\\Coreledge.db";
        
-        try {
-            conn = DriverManager.getConnection(dbPath);
-            System.out.println("conectou");
+        try 
+        {
             
-            String sql = "SELECT * FROM TYPE_LITHOLOGY WHERE PETRO_ID = 1";
-            
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            
-            while(rs.next())
-            {
-                System.out.println(rs.getString("VALUE_ENUS"));
-            }
-            
+            conn = DriverManager.getConnection(dbPath);                      
         } catch (SQLException ex) {
             Logger.getLogger(SQLite.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        return conn;
+    }
+    
+    public String readValue(AttributeType type, int code) 
+    {
+        String lithologyName = null;
+        
+        Connection conn = connect();
+        
+
+        String sql = "SELECT * FROM " + type.toString() + " WHERE PETRO_ID = " + code;
+
+        Statement stmt = null;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while(rs.next())
+            {
+                lithologyName = rs.getString("VALUE_ENUS");
+            }
+            stmt.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLite.class.getName()).log(Level.SEVERE, null, ex);
+        } finally
+        {
+            try 
+            {                
+                stmt.close();
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SQLite.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return lithologyName;
     }
 }
