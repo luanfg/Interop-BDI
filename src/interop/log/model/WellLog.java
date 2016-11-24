@@ -15,7 +15,9 @@ import java.util.List;
  */
 public class WellLog 
 {
-    private LogType logType;
+    private String logType;
+    private String logDescription;
+    private String logMeasureUnit;
     private float nullValue;
     private LogValueList logValues;
 
@@ -24,55 +26,46 @@ public class WellLog
         this.logValues = new LogValueList();
     }
     
-     /**
-     * @return The log type class.
-     * @author Bruno Zanette
-     */
-    public LogType getLogTypeClass()
-    {
-        return logType;
-    }
-    
     /**
      * @return The log mnemonic.
      */
     public String getLogType() {
-        return logType.getLogType();
+        return logType;
     }
 
     /**
      * @param logType The log mnemonic.
      */
     public void setLogType(String logType) {
-        this.logType.setLogType(logType);
+        this.logType = logType;
     }
 
     /**
      * @return The description of the log.
      */
     public String getLogDescription() {
-        return logType.getLogDescription();
+        return logDescription;
     }
 
     /**
      * @param logDescription the logDescription to set
      */
     public void setLogDescription(String logDescription) {
-        this.logType.setLogDescription(logDescription);
+        this.logDescription = logDescription;
     }
 
     /**
      * @return the logMeasureUnit
      */
     public String getLogMeasureUnit() {
-        return logType.getLogMeasureUnit();
+        return logMeasureUnit;
     }
 
     /**
      * @param logMeasureUnit the logMeasureUnit to set
      */
     public void setLogMeasureUnit(String logMeasureUnit) {
-        this.logType.setLogMeasureUnit(logMeasureUnit);
+        this.logMeasureUnit = logMeasureUnit;
     }
 
     /**
