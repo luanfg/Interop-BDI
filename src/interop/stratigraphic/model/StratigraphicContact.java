@@ -5,6 +5,8 @@
  */
 package interop.stratigraphic.model;
 
+import interop.stratigraphic.control.SQLite;
+
 /**
  *
  * @author Luan
@@ -13,7 +15,8 @@ public class StratigraphicContact extends AbstractStratigraphicAttribute {
 
     @Override
     protected void updateValue() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SQLite sql = new SQLite();
+        this.value = sql.readValue(AttributeType.Contact, this.getId());
     }
 
 
