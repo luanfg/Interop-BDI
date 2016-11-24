@@ -8,18 +8,21 @@ package interop.stratigraphic.model;
 import interop.model.IAttribute;
 
 /**
- *
+ * A default class for facies attributes from Strataledge. The id value must come from a parsed Strata XML, every other attribute must come from the database.
  * @author Luan
  */
 public abstract class AbstractStratigraphicAttribute implements IAttribute
 {
  
-    private String value;
+    protected String value = null;
     private int id;
 
     protected abstract void updateValue();
 
-    
+    /**
+     * Returns the nominal value of the attribute instance as a String. This value is filled accessing the database.
+     * @return 
+     */
     public String getValue()
     {
         if(value == null)
@@ -34,7 +37,10 @@ public abstract class AbstractStratigraphicAttribute implements IAttribute
         this.id = id;
     }
 
-
+    /**
+     * Returns the code id value of the attribute.
+     * @return 
+     */
     public int getId() {
 
         return this.id;
