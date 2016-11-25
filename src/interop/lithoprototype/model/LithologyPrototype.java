@@ -6,6 +6,7 @@
 package interop.lithoprototype.model;
 
 import interop.log.model.LogType;
+import interop.lithoprototype.util.FaciesLogCorrelation;
 import java.util.List;
 
 /** Classe que contém uma tabela de covariância(LogCovarianceMatrix) e um vetor de médias(LogAverageVector) pertencente a mesma litologia.
@@ -14,7 +15,6 @@ import java.util.List;
  */
 public class LithologyPrototype {
     private int lithologyUID;
-    private List<LogType> logTypes;
     private LogAverageVector lithologyLogAverageVector;
     private LogCovarianceMatrix lithologyLogCovarianceMatrix;
     
@@ -57,8 +57,9 @@ public class LithologyPrototype {
     /**     TO-DO:  this function will receive stratigraphic and log data and feed the lithology prototype.
      *      OBS:    there will be no set function to the covariance matrix and average vector.
      */
-    public void feedPrototype()
+    public void feedPrototype(FaciesLogCorrelation faciesLogCorrelation)
     {
-    
+         lithologyLogAverageVector.feedAverageVector(faciesLogCorrelation);
+         lithologyLogCovarianceMatrix.feedCovarianceMatrix(faciesLogCorrelation);
     }
 }

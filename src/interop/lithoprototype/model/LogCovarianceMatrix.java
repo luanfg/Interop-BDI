@@ -6,6 +6,8 @@
 package interop.lithoprototype.model;
 
 import java.util.List;
+import interop.lithoprototype.util.FaciesLogCorrelation;
+
 
 /** Contém uma tabela de covariância 
  *  
@@ -24,7 +26,7 @@ public class LogCovarianceMatrix {
         return covarianceMatrix;
     }
     
-    public void feedCovarianceMatrix()
+    public void feedCovarianceMatrix(FaciesLogCorrelation faciesLogCorrelation)
     {
     
     }

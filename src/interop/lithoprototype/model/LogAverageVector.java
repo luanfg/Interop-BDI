@@ -5,6 +5,8 @@
  */
 package interop.lithoprototype.model;
 
+import interop.util.Pair;
+import interop.lithoprototype.util.FaciesLogCorrelation;
 import java.util.List;
 
 /** Classe que contém um vetor de médias.
@@ -22,5 +24,12 @@ public class LogAverageVector {
     public List<Double> getAverageVector()
     {
         return logAverages;
+    }
+    
+    public void feedAverageVector(FaciesLogCorrelation faciesLogCorrelation)
+    {
+      
+        
+        
     }
 }

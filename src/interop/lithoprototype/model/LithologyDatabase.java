@@ -5,17 +5,40 @@
  */
 package interop.lithoprototype.model;
 
+import interop.log.model.LogType;
 import interop.lithoprototype.util.FaciesLogCorrelation;
 
 import java.util.List;
 
 /** Classe que contém o conjunto de protótipos de litologias (LithologyPrototype).
- *
+ *          EM BREVE
  * @author Bruno Zanette
  */
 public class LithologyDatabase {
-    private List<Integer> lithologyList;
+    private List<LogType> logTypes;
     private List<LithologyPrototype> lithologyPrototypes;
+    
+    
+    
+    private int indexLogType(LogType logType)
+    {
+        
+        for(LogType currentLogType:logTypes)
+        {
+            
+        }
+        return 1;
+    }
+    
+    static private boolean compareLogType(LogType logType1, LogType logType2)
+    {
+        if(logType1 == logType2)
+            return true;
+        else if(logType1.getLogType().equals(logType2.getLogType()))
+            return true;
+        else
+            return false;
+    }
     
     /**
      * Feeds the database with the a facies-log correlation.
@@ -24,11 +47,14 @@ public class LithologyDatabase {
      */
     public void feedDatabase(FaciesLogCorrelation faciesLogCorrelation)
     {
+        List<Integer> bijectionVector;
+        
+        
         for(LithologyPrototype prototype : lithologyPrototypes)
         {
             if(faciesLogCorrelation.getLithologyUID() == prototype.getLithologyUID())
             {
-                prototype.feedPrototype();
+                prototype.feedPrototype(faciesLogCorrelation);
                 return;
             }
         }        
@@ -45,10 +71,5 @@ public class LithologyDatabase {
             feedDatabase(faciesLogCorrelation);
         }
     }
-    
-    public void main()
-    {
-        
-    }
-    
+     
 }
