@@ -18,6 +18,7 @@ import java.util.ArrayList;
  * @author Bruno Zanette
  */
 public class FaciesLogCorrelation {
+    String wellName; //for debug
     DepositionalFacies facies;
     List<WellLog> wellLogsSlice;
     
@@ -88,6 +89,16 @@ public class FaciesLogCorrelation {
         return anyLogValueList.size();
     }
     
+    public String getWellName()
+    {
+        return wellName;
+    }
+    
+    public List<WellLog> getListOfLogs()
+    {
+        return wellLogsSlice;
+    }
+    
     /**
      *  Slice the list of WellLog maintaining the data of the depths that corresponds to the specified depositional facies. 
      * @param wellLogs the complete wellLog received as parameter at the constructor.
@@ -95,9 +106,12 @@ public class FaciesLogCorrelation {
      */
     private List<WellLog> sliceWellLog(ParsedLAS parsed)
     {
+        wellName = parsed.getWellName();
+        
         //System.out.println("Number of log samples: " + wellLogs.get(0).getLogValues().size());
         List<WellLog> slicedWellLogs = new ArrayList<>();
         //System.out.println("**In sliceWellLog of FaciesLogCorrelation**\n Well Logs Size: " + wellLogs.size() + "\n***********\n");
+        
         
         
         float faciesTopMeasure = facies.getTopMeasure();
@@ -115,19 +129,32 @@ public class FaciesLogCorrelation {
             int diffTopSteps = (int)(diffTop/logStep);
        
             /*
+            System.out.println("startDepth: " + parsed.getStartDepth());
+            System.out.println("topMeasure: " + facies.getTopMeasure());
+            System.out.println("well: " + parsed.getWellName());
+            System.out.println("logStep: " + logStep);
             System.out.println("diffTop: " + diffTop + "\ndiffTopSteps: " + diffTopSteps);
             System.out.println((diffTopSteps-(int)diffTopSteps));
             System.out.println("Calculated Log Top Measure: " + parsed.getLogsList().get(0).getLogValues().get(diffTopSteps).getDepth());
             System.out.println();
             */
+            
+            
             startIndex = diffTopSteps;
             
             if(faciesBottomMeasure > logBottomMeasure)
             {
+                //System.out.println("faciesBottomMeasure: " + faciesBottomMeasure);
+                //System.out.println("faciesTopMeasure: " + faciesBottomMeasure);
+                
+                
                 float diff = faciesBottomMeasure - faciesTopMeasure;
+                
+                System.out.println("diff: " + diff);
+                
                 int diffBottomSteps = diffTopSteps + (int)(diff/logStep);
                 
-                stopIndex = diffBottomSteps;
+                stopIndex = diffBottomSteps-1;
             }
             else
             {
@@ -159,6 +186,7 @@ public class FaciesLogCorrelation {
     {
         System.out.println("***Facies Log Correlation***");
         
+        System.out.println("Well: " + this.getWellName());
         System.out.println("Top Measure: " + this.getTopMeasure());
         System.out.println("Bottom Measure: " + this.getBottomMeasure());
         System.out.println("Lithology UID; " + this.getLithologyUID());
