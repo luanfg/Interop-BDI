@@ -47,16 +47,17 @@ public class InteropFramework extends Application {
         }*/
 
         LASParser parser = new LASParser();    
-//        ParsedLAS parsed = parser.parseLAS("FU128.las");
+        ParsedLAS parsed = parser.parseLAS("FU128.las");
 //        System.out.println(parser.parseLAS("FU128.las").getLogsList().size());
        
         Button btn = new Button();
-        btn.setText("Say 'Hello World'");
+        btn.setText("Print Logs");
         btn.setOnAction(new EventHandler<ActionEvent>() {
             
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
+                DrawGraphics dg = new DrawGraphics(parsed);
+                dg.draw();
             }
         });
         
