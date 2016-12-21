@@ -32,7 +32,7 @@ public class MovingMeans {
                  inWindow++;
             }
             // Subtracts the entry prior to i-n/2 from the sum
-            if(i-1-windowSize/2 > 0){
+            if(i-1-windowSize/2 >= 0){
                 parSum -= logList.get(i-1-windowSize/2).getLogValue();
                 inWindow--;
             }
