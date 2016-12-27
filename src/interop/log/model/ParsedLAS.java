@@ -185,4 +185,30 @@ public class ParsedLAS
     public void setVersion(String version) {
         this.version = version;
     }
+
+    public double getMaxValue(int log) {
+        double wellSize = this.getStopDepth() - this.getStartDepth();
+        double maxValue=-99999; //LAS file can have values bigger than 99999?
+        //double minValue=99999;
+        for(int p=0; p<(int)wellSize*5; p++ ){//for the beginning to an end of a log
+            double q = this.getLogsList().get(log).getLogValues().get(p).getLogValue();
+            if(q>maxValue && q!= this.getNullValue()){
+                maxValue=q;
+            }
+        }
+        return maxValue;
+    }
+
+    public double getMinValue(int log) {
+        double wellSize = this.getStopDepth() - this.getStartDepth();
+        //double maxValue=-99999; //LAS file can have values bigger than 99999?
+        double minValue=99999;
+        for(int p=0; p<(int)wellSize*5; p++ ){//for the beginning to an end of a log
+            double q = this.getLogsList().get(log).getLogValues().get(p).getLogValue();
+            if(q<minValue && q!=this.getNullValue()){
+                minValue=q;
+            }
+        }
+        return minValue;
+    }
 }
