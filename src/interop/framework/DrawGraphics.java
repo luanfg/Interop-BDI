@@ -21,6 +21,7 @@ public class DrawGraphics extends JPanel{
     private int width = 1280;//TODO: mudar dimensao janela
     private int height = 720;
     ParsedLAS parsed;
+    JFrame application = new JFrame();
     
     public DrawGraphics(ParsedLAS parsed) {
         super(); 
@@ -37,7 +38,10 @@ public class DrawGraphics extends JPanel{
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-             
+        
+        this.width = this.application.getWidth();
+        this.height = this.application.getHeight();
+        
         for( int i =0; i < parsed.getLogsList().size() ; i++ ){//for each log....
    
             boolean dontHaveFirstBit=true;//for the first value only 
@@ -74,7 +78,6 @@ public class DrawGraphics extends JPanel{
     
     public void draw()
     {
-        JFrame application = new JFrame();
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         application.add(this);           
         application.setSize(width, height);
