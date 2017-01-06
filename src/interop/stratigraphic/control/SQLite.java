@@ -40,8 +40,8 @@ public class SQLite
     
     public String readValue(AttributeType type, int code) 
     {
-        String lithologyName = null;
-        
+        String valueOfATuple = null;
+                
         Connection conn = connect();
         
 
@@ -54,7 +54,10 @@ public class SQLite
 
             while(rs.next())
             {
-                lithologyName = rs.getString("VALUE_ENUS");
+                if(AttributeType.RockColor == type)
+                    valueOfATuple = rs.getString("VALUE_HEX");//To get the RGB value
+                else
+                    valueOfATuple = rs.getString("VALUE_ENUS");
             }
             stmt.close();
             
@@ -71,6 +74,6 @@ public class SQLite
             }
         }
         
-        return lithologyName;
+        return valueOfATuple;
     }
 }
