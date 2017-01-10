@@ -54,10 +54,43 @@ public class SQLite
 
             while(rs.next())
             {
-                if(AttributeType.RockColor == type)
-                    valueOfATuple = rs.getString("VALUE_HEX");//To get the RGB value
-                else
-                    valueOfATuple = rs.getString("VALUE_ENUS");
+                valueOfATuple = rs.getString("VALUE_ENUS");
+            }
+            stmt.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLite.class.getName()).log(Level.SEVERE, null, ex);
+        } finally
+        {
+            try 
+            {                
+                stmt.close();
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SQLite.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return valueOfATuple;
+    }
+    
+    public String readValue(AttributeType table, String column, int code) 
+    {
+        String valueOfATuple = null;
+                
+        Connection conn = connect();
+        
+
+        String sql = "SELECT * FROM " + table.toString() + " WHERE PETRO_ID = " + code;
+
+        Statement stmt = null;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while(rs.next())
+            {
+                valueOfATuple = rs.getString(column);
             }
             stmt.close();
             
