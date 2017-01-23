@@ -17,6 +17,8 @@ import interop.stratigraphic.model.AttributeType;
 import interop.stratigraphic.model.StratigraphicDescription;
 import interop.stratigraphic.util.XMLReader;
 import java.util.List;
+//import javafx.scene.canvas.GraphicsContext;
+
 
 /**
  *
@@ -40,14 +42,9 @@ public class DrawGraphics extends JPanel{
             g.drawString(nome, (int)whereToPutTheLogName, 12);
     }
     
-    void drawCore(int cod, Graphics g)
-    /*PROBLEMAS: 
-            1:O core nao esta paralelo aos dados geofísicos pois ele esta no range entre 0 e 883
-              e os geofísicos entre 900 e 2147, nada sobre algum offset no xml, isso parece fazer sentido?
-    */
+    void drawCore(Graphics g)
     {
-        List<StratigraphicDescription> listCore = XMLReader.readStratigraphicDescriptionXML("C:\\Users\\eduardo\\Documents\\NetBeansProjects\\Interop-BDI\\TG_22_20130605171952.xml");
-        
+        List<StratigraphicDescription> listCore = XMLReader.readStratigraphicDescriptionXML("TG_22_20130605171952.xml");
         int size = listCore.get(0).getFaciesList().size();
         float endAt = listCore.get(0).getBottomMeasure();
         float startAt = listCore.get(0).getTopMeasure();
@@ -58,7 +55,8 @@ public class DrawGraphics extends JPanel{
             float bottomMeasure = listCore.get(0).getFaciesList().get(i).getBottomMeasure();
             float topMeasure = listCore.get(0).getFaciesList().get(i).getTopMeasure();
                                    
-            String color = listCore.get(0).getFaciesList().get(i).getRockColor().getValue();
+            String color = listCore.get(0).getFaciesList().get(i).getRockColor().getRGBCode();
+            //String color = listCore.get(0).getFaciesList().get(i).getRockColor().
                        
             int red = 0, green = 0, blue =0;
             if(color != null){
@@ -67,22 +65,38 @@ public class DrawGraphics extends JPanel{
                 blue =  Integer.valueOf( color.substring( 5, 7 ), 16 );
             }
                             
-            double screeny = (((int)topMeasure - startAt) * (height-25))  / (wellSize) +25;
+            double screeny_top = (((int)topMeasure - startAt) * (height-25))  / (wellSize) +25;
             double screeny_bottom = (((int)bottomMeasure - startAt) * (height-25))  / (wellSize) +25;
+            double screenx_left = (parsed.getLogsList().size()+1)* width / (parsed.getLogsList().size()+2) ;
+            double screenx_right = (parsed.getLogsList().size()+2)* width / (parsed.getLogsList().size()+2) ;
+            
+            double widthBox = screenx_right - screenx_left;
+            double heightBox = screeny_bottom - screeny_top;
             
             Color finalColor = new Color(red,green,blue);
             g.setColor(finalColor);
-            g.fillRect(this.width-50, (int)screeny, 40, 20);
+            g.fillRect((int)screenx_left, (int)screeny_top,  (int)widthBox, (int)heightBox);
             g.setColor(Color.BLACK);
-            g.drawRect(this.width-50, (int)screeny, 40, 20);
+            g.drawRect((int)screenx_left, (int)screeny_top, (int)widthBox, (int)heightBox);
             //g.setColor(Color.BLACK);
             
-            String litho = listCore.get(0).getFaciesList().get(i).getLithology().getValue();
-            if(litho!=null)
-                g.drawString(litho, (int)this.width-100, (int)screeny );
+            String litho = listCore.get(0).getFaciesList().get(i).getRockColor().getValue();
+            if(litho!=null){
+                g.drawString(litho, (int)screenx_left, (int)screeny_bottom );
+            }
+            
+            String svgCode = listCore.get(0).getFaciesList().get(i).getLithology().getTextureSVG();
+            if(svgCode != null){
+                textureTest(g,svgCode);
+            }
+            
+            
         }
     }
     
+    public void textureTest(Graphics g, String svg){
+        //System.out.println(svg);
+    }
     
     public void paintComponent(Graphics g)
     {
@@ -123,7 +137,8 @@ public class DrawGraphics extends JPanel{
                 }
             }
         }
-        drawCore(1,g);
+        drawCore(g);
+        
    }
     
     public void draw()
