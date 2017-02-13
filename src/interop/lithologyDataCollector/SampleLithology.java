@@ -44,7 +44,123 @@ public class SampleLithology {
         logTypesWanted.add("SP");
         logTypesWanted.add("SN");
         logTypesWanted.add("MSFL");
+        
+     /* //TESTE 1 TREINO
+        String pathLogNA04 = "Teste 1\\Treino\\NA04.las";
+        List<String> pathDescriptionsNA04 = new ArrayList<>(); 
+        pathDescriptionsNA04.add("Teste 1\\Treino\\3-NA-04-RJS_(T1)_20150504162349_05.xml");
+        pathDescriptionsNA04.add("Teste 1\\Treino\\3-NA-04-RJS_(T2)_20150504162352_07.xml");
+        pathDescriptionsNA04.add("Teste 1\\Treino\\3-NA-04-RJS_(T4)_20150504162354_09.xml");
+        pathDescriptionsNA04.add("Teste 1\\Treino\\3-NA-04-RJS_(T5)_20150504162356_10.xml");
+        SampleLithology.processWell(pathLogNA04, pathDescriptionsNA04);
+    */
+      
+    /*  //TESTE 1 VALIDAÇÃO
+        String pathLogNA04 = "Teste 1\\Validacao\\NA04.las";
+        List<String> pathDescriptionsNA04 = new ArrayList<>(); 
+        pathDescriptionsNA04.add("Teste 1\\Validacao\\3-NA-04-RJS_(T3)_20150504162352_08.xml");
+        SampleLithology.processWell(pathLogNA04, pathDescriptionsNA04);
+    */
     
+    /*  //TESTE 2 TREINO
+        String pathLogRJS019 = "Teste 2\\Treino\\1-RJ-19-RJS\\RJS019.las";
+        List<String> RJS019 = new ArrayList<>(); 
+        RJS019.add("Teste 2\\Treino\\1-RJ-19-RJS\\1-RJ-19-RJS_(T2)_20150504162350_06.xml");
+        SampleLithology.processWell(pathLogRJS019, RJS019);
+        
+        String pathLogNA01A = "Teste 2\\Treino\\3-NA-1A-RJS\\NA01A.las";
+        List<String> NA01A = new ArrayList<>(); 
+        NA01A.add("Teste 2\\Treino\\3-NA-1A-RJS\\3-NA-1A-RJS_(T3)_20150504162348_04.xml");
+        SampleLithology.processWell(pathLogNA01A, NA01A);
+        
+        String pathLogNA02 = "Teste 2\\Treino\\3-NA-02-RJS\\NA02.las";
+        List<String> NA02 = new ArrayList<>(); 
+        NA02.add("Teste 2\\Treino\\3-NA-02-RJS\\3-NA-02-RJS_(T1)_20150504162347_03.xml");
+        NA02.add("Teste 2\\Treino\\3-NA-02-RJS\\3-NA-02-RJS_(T2)_20150504162346_02.xml");
+        NA02.add("Teste 2\\Treino\\3-NA-02-RJS\\3-NA-02-RJS_(T3)_20150504162345_01.xml");
+        SampleLithology.processWell(pathLogNA02, NA02);
+        
+        String pathLogNA04 = "Teste 2\\Treino\\3-NA-04-RJS\\NA04.las";
+        List<String> NA04 = new ArrayList<>(); 
+        NA04.add("Teste 2\\Treino\\3-NA-04-RJS\\3-NA-04-RJS_(T1)_20150504162349_05.xml");
+        NA04.add("Teste 2\\Treino\\3-NA-04-RJS\\3-NA-04-RJS_(T2)_20150504162352_07.xml");
+        NA04.add("Teste 2\\Treino\\3-NA-04-RJS\\3-NA-04-RJS_(T3)_20150504162352_08.xml");
+        NA04.add("Teste 2\\Treino\\3-NA-04-RJS\\3-NA-04-RJS_(T4)_20150504162354_09.xml");
+        NA04.add("Teste 2\\Treino\\3-NA-04-RJS\\3-NA-04-RJS_(T5)_20150504162356_10.xml");
+        SampleLithology.processWell(pathLogNA04, NA04);
+        
+        String pathLogRJS042 = "Teste 2\\Treino\\4-RJ-42-RJS\\RJS042.las";
+        List<String> RJS042 = new ArrayList<>(); 
+        RJS042.add("Teste 2\\Treino\\4-RJ-42-RJS\\4-RJS-42-RJS_(T1)_20150504162357_11.xml");
+        RJS042.add("Teste 2\\Treino\\4-RJ-42-RJS\\4-RJS-42-RJS_(T2)_20150504162359_12.xml");
+        SampleLithology.processWell(pathLogRJS042, RJS042);
+        
+     */
+    
+    /*//TESTE 2 VALIDACAO
+        String pathLogRJS042 = "Teste 2\\Validacao\\4-RJS-234-RJS\\RJS234.las";
+        List<String> RJS042 = new ArrayList<>(); 
+        RJS042.add("Teste 2\\Validacao\\4-RJS-234-RJS\\4-RJS-234-RJS_(T1)_20150504162401_13.xml");
+        RJS042.add("Teste 2\\Validacao\\4-RJS-234-RJS\\4-RJS-234-RJS_(T2)_20150504162402_14.xml");
+        RJS042.add("Teste 2\\Validacao\\4-RJS-234-RJS\\4-RJS-234-RJS_(T3)_20150504162404_15.xml");
+        RJS042.add("Teste 2\\Validacao\\4-RJS-234-RJS\\4-RJS-234-RJS_(T4)_20150504162404_16.xml");
+        RJS042.add("Teste 2\\Validacao\\4-RJS-234-RJS\\4-RJS-234-RJS_(T5)_20150504162405_17.xml");
+        RJS042.add("Teste 2\\Validacao\\4-RJS-234-RJS\\4-RJS-234-RJS_(T6)_20150504162408_18.xml");
+        SampleLithology.processWell(pathLogRJS042, RJS042);
+      */  
+    /*  //TESTE 3 TREINO
+        String pathLogRJS234 = "Teste 3\\Treino\\4-RJS-234-RJS\\RJS234.las";
+        List<String> RJS234 = new ArrayList<>(); 
+        RJS234.add("Teste 3\\Treino\\4-RJS-234-RJS\\4-RJS-234-RJS_(T1)_20150504162401_13.xml");
+        RJS234.add("Teste 3\\Treino\\4-RJS-234-RJS\\4-RJS-234-RJS_(T2)_20150504162402_14.xml");
+        RJS234.add("Teste 3\\Treino\\4-RJS-234-RJS\\4-RJS-234-RJS_(T3)_20150504162404_15.xml");
+        RJS234.add("Teste 3\\Treino\\4-RJS-234-RJS\\4-RJS-234-RJS_(T4)_20150504162404_16.xml");
+        RJS234.add("Teste 3\\Treino\\4-RJS-234-RJS\\4-RJS-234-RJS_(T5)_20150504162405_17.xml");
+        RJS234.add("Teste 3\\Treino\\4-RJS-234-RJS\\4-RJS-234-RJS_(T6)_20150504162408_18.xml");
+        SampleLithology.processWell(pathLogRJS234, RJS234);
+    */
+    
+    /*  //TESTE 3 VALIDACAO
+        String pathLogRJS234 = "Teste 3\\Validacao\\NA07.las";
+        List<String> RJS234 = new ArrayList<>(); 
+        RJS234.add("Teste 3\\Validacao\\7-NA-07-RJS_(T1)_20150504162409_19.xml");
+        RJS234.add("Teste 3\\Validacao\\7-NA-07-RJS_(T2)_20150504162410_20.xml");
+        RJS234.add("Teste 3\\Validacao\\7-NA-07-RJS_(T3)_20150504162411_21.xml");
+        RJS234.add("Teste 3\\Validacao\\7-NA-07-RJS_(T4)_20150504162413_22.xml");
+        RJS234.add("Teste 3\\Validacao\\7-NA-07-RJS_(T5)_20150504162414_23.xml");
+        RJS234.add("Teste 3\\Validacao\\7-NA-07-RJS_(T6)_20150504162414_24.xml");
+        SampleLithology.processWell(pathLogRJS234, RJS234);
+    */
+    
+    /*  //TESTE 4 TREINO
+        String pathLogRJS019 = "Teste 4\\Treino\\1-RJ-19-RJS\\RJS019.las";
+        List<String> RJS019 = new ArrayList<>(); 
+        RJS019.add("Teste 4\\Treino\\1-RJ-19-RJS\\1-RJ-19-RJS_(T2)_20150504162350_06.xml");
+        SampleLithology.processWell(pathLogRJS019, RJS019);
+    */
+    
+    /*    //TESTE 4 VALIDACAO
+        String pathLogRJS019 = "Teste 4\\Validacao\\LPN2\\perfis\\LPN-2.las";
+        List<String> RJS019 = new ArrayList<>(); 
+        RJS019.add("Teste 4\\Validacao\\LPN2\\LPN_02_ES-T1_20141030144704.xml");
+        RJS019.add("Teste 4\\Validacao\\LPN2\\LPN_02_ES-T2_20141030144545.xml");
+        RJS019.add("Teste 4\\Validacao\\LPN2\\LPN_02_ES-T3_20141031170856.xml");
+        RJS019.add("Teste 4\\Validacao\\LPN2\\LPN_02_ES-T4_20141031175409.xml");
+        RJS019.add("Teste 4\\Validacao\\LPN2\\LPN_02_ES-T5_20141103143620.xml");
+        SampleLithology.processWell(pathLogRJS019, RJS019);
+    */
+    /*  //TESTE 5 TREINO
+        String pathLogESS23 = "Teste 5\\Treino\\ESS-23.las";
+        List<String> ESS23 = new ArrayList<>(); 
+        ESS23.add("Teste 5\\Treino\\ESS023_Rangel_T1_20141021111049.xml");
+        ESS23.add("Teste 5\\Treino\\ESS023_RANGEL_T2_20141022131905.xml");
+        ESS23.add("Teste 5\\Treino\\ESS023_RANGEL_T4_20141027133209.xml");
+        ESS23.add("Teste 5\\Treino\\ESS023_RANGEL_T5_20141027143230.xml");
+        ESS23.add("Teste 5\\Treino\\ESS023_RANGEL_T6_20141027145430.xml");
+        SampleLithology.processWell(pathLogESS23, ESS23);
+    */
+    
+    /*  //TESTE 6 TREINO
         String pathLogCP1847 = "teste6\\treino\\3-CP-1847-SE\\Perfis\\CP1847.las";
         List<String> pathDescriptionsCP1847 = new ArrayList<>(); 
         pathDescriptionsCP1847.add("teste6\\treino\\3-CP-1847-SE\\3-CP-1847-SE_(T1)_20151112101101_31.xml");
@@ -98,7 +214,22 @@ public class SampleLithology {
         pathDescriptionsSZ160.add("teste6\\treino\\9-SZ-0160-SE\\9-SZ-0160-SE_(T32)_20151112101052_12.xml");
         pathDescriptionsSZ160.add("teste6\\treino\\9-SZ-0160-SE\\9-SZ-0160-SE_(T33)_20151112101052_13.xml");
         SampleLithology.processWell(pathLogSZ160, pathDescriptionsSZ160);
+    */
     
+    //TESTE 6 VALIDACAO
+        String pathLogSZ160 = "teste6\\Validacao\\7-CP-0995-SE\\Perfis\\CP995.las";
+        List<String> pathDescriptionsSZ160 = new ArrayList<>(); 
+        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T1)_20151112101055_19.xml");
+        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T2)_20151112101056_21.xml");
+        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T3)_20151112101056_22.xml");
+        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T4)_20151112101057_23.xml");
+        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T5)_20151112101057_24.xml");
+        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T6)_20151112101058_25.xml");
+        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T7)_20151112101058_26.xml");
+        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T8)_20151112101059_27.xml");
+        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T9)_20151112101100_28.xml");
+        SampleLithology.processWell(pathLogSZ160, pathDescriptionsSZ160);
+        
     
         for(LithologyArchiveFormat laf: lithologies){
             laf.saveToArchive();
@@ -126,6 +257,7 @@ public class SampleLithology {
             String xml = discoverLithology.getXmlPath();
             OrganizedSample.add(las);
             OrganizedSample.add(xml);
+            OrganizedSample.add(Integer.toString(lithology));
             
             
             //if(lithology >= -1){//WITH UNUSED SAMPLES
@@ -201,7 +333,7 @@ public class SampleLithology {
                     }
                 }
             }
-            return -1;
+            return 0;
         }
         
     private static List<DepositionalFacies> mmTOm(List<DepositionalFacies> depositionalFacies)
@@ -276,6 +408,7 @@ public class SampleLithology {
                         writer.print(types);
                         writer.print(TAB);
                     }
+                    writer.print("LAS" + TAB + "XML" + TAB + "LITHO");
                     writer.println();
                                       
                     for(List<String> sample:specificLog){
