@@ -1,0 +1,1 @@
+When SampleLithology.main() is executed this folder will be filled with files that represents each one a different lithology with its respective log samples
