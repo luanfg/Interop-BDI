@@ -18,6 +18,14 @@ public class LithologyPrototype {
     private LogAverageVector lithologyLogAverageVector;
     private LogCovarianceMatrix lithologyLogCovarianceMatrix;
     
+    
+    LithologyPrototype() {
+        
+       lithologyLogAverageVector = new LogAverageVector();
+       lithologyLogCovarianceMatrix = new LogCovarianceMatrix();
+    }
+    
+    
     /**
      * 
      * @param lithoUID The lithology UID.
@@ -51,15 +59,16 @@ public class LithologyPrototype {
      */
     public List<List<Double>> getCovarianceMatrix()
     {
-        return lithologyLogCovarianceMatrix.getCovarianceMatrix();
+        return lithologyLogCovarianceMatrix.calculateCovarianceMatrix(getAverageVector());
     }
 
-    /**     TO-DO:  this function will receive stratigraphic and log data and feed the lithology prototype.
-     *      OBS:    there will be no set function to the covariance matrix and average vector.
-     */
-    public void feedPrototype(FaciesLogCorrelation faciesLogCorrelation)
-    {
-         lithologyLogAverageVector.feedAverageVector(faciesLogCorrelation);
-         lithologyLogCovarianceMatrix.feedCovarianceMatrix(faciesLogCorrelation);
+       
+
+    void feedPrototype(List<String> OrganizedSample) {
+        //System.out.println(OrganizedSample);
+        lithologyLogAverageVector.feedAverageVector(OrganizedSample);
+        lithologyLogCovarianceMatrix.feedCovarianceMatrix(OrganizedSample);
     }
+
+    
 }

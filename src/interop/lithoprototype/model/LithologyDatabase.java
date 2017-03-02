@@ -7,6 +7,7 @@ package interop.lithoprototype.model;
 
 import interop.log.model.LogType;
 import interop.lithoprototype.util.FaciesLogCorrelation;
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -19,15 +20,34 @@ public class LithologyDatabase {
     private List<LithologyPrototype> lithologyPrototypes;
     
     
+    public LithologyDatabase(List<String> ltw) {
+        
+        logTypes = new ArrayList<>();
+        lithologyPrototypes = new ArrayList<>();
+        for(String log:ltw){
+            LogType lt = new LogType();
+            lt.setLogType(log);
+            //lt.setLogDescription( TODO );
+            //lt.setLogMeasureUnit( TODO );
+            
+            logTypes.add(lt);
+        }
+        
+    }
+    
+    public List<LithologyPrototype> getLithologiesPrototypes(){
+        return lithologyPrototypes;
+    }
     
     private int indexLogType(LogType logType)
     {
         
-        for(LogType currentLogType:logTypes)
-        {
-            
+        for(int i=0; i<logTypes.size(); i++){
+            if( compareLogType(logTypes.get(i), logType)){
+                return i;
+            }
         }
-        return 1;
+        return -1;//ERROR, SHOULD NEVER GET HERE
     }
     
     static private boolean compareLogType(LogType logType1, LogType logType2)
@@ -40,36 +60,23 @@ public class LithologyDatabase {
             return false;
     }
     
-    /**
-     * Feeds the database with the a facies-log correlation.
-     * TO-DO: Maybe implement a binary search or a tree to find the wanted prototype faster.
-     * @param faciesLogCorrelation a facies-log correlation.
-     */
-    public void feedDatabase(FaciesLogCorrelation faciesLogCorrelation)
-    {
-        List<Integer> bijectionVector;
-        
-        
-        for(LithologyPrototype prototype : lithologyPrototypes)
-        {
-            if(faciesLogCorrelation.getLithologyUID() == prototype.getLithologyUID())
-            {
-                prototype.feedPrototype(faciesLogCorrelation);
-                return;
-            }
-        }        
-    }
     
-    /**
-     * Feeds the database with a list of facies-log correlations.
-     * @param listOfFaciesLogCorrelation a list of facies-log correlations.
-     */
-    public void feedDatabase(List<FaciesLogCorrelation> listOfFaciesLogCorrelation)
-    {
-        for(FaciesLogCorrelation faciesLogCorrelation:listOfFaciesLogCorrelation)
-        {
-            feedDatabase(faciesLogCorrelation);
+
+    public void feedDatabase(int lithology, List<String> OrganizedSample) {
+        boolean found = false;
+        for(LithologyPrototype lp:lithologyPrototypes){
+            if(!found){
+                if(lp.getLithologyUID()==lithology){
+                    lp.feedPrototype(OrganizedSample);
+                    found = true;
+                }
+            }
         }
-    }
-     
+        if(!found){
+            LithologyPrototype newLP = new LithologyPrototype();
+            newLP.setLithologyUID(lithology);
+            newLP.feedPrototype(OrganizedSample);
+            lithologyPrototypes.add(newLP);
+        }
+    }    
 }
