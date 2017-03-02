@@ -5,6 +5,7 @@
  */
 package interop.lithologyDataCollector;
 
+import interop.lithoprototype.model.LithologyDatabase;
 import interop.lithoprototype.util.FaciesLogCorrelation;
 import interop.log.model.LogValuePair;
 import interop.log.model.ParsedLAS;
@@ -29,8 +30,10 @@ public class SampleLithology {
     private static List<String> logTypesWanted;
     private static String TAB = "\t"; 
     private static List<LithologyArchiveFormat> lithologies = new ArrayList<>();
+    private static LithologyDatabase db;
+    public static float nullValue;
     
-    public static void main()
+    public static LithologyDatabase main()
     {  
         logTypesWanted = new ArrayList<>();
         logTypesWanted.add("DEPT");
@@ -44,6 +47,8 @@ public class SampleLithology {
         logTypesWanted.add("SP");
         logTypesWanted.add("SN");
         logTypesWanted.add("MSFL");
+        
+        db = new LithologyDatabase(logTypesWanted);
         
      /* //TESTE 1 TREINO
         String pathLogNA04 = "Teste 1\\Treino\\NA04.las";
@@ -217,23 +222,25 @@ public class SampleLithology {
     */
     
     //TESTE 6 VALIDACAO
-        String pathLogSZ160 = "teste6\\Validacao\\7-CP-0995-SE\\Perfis\\CP995.las";
+        String pathLogSZ160 = "C:\\StrataDB\\Teste 6\\Validacao\\7-CP-0995-SE\\Perfis\\CP995.las";
         List<String> pathDescriptionsSZ160 = new ArrayList<>(); 
-        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T1)_20151112101055_19.xml");
-        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T2)_20151112101056_21.xml");
-        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T3)_20151112101056_22.xml");
-        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T4)_20151112101057_23.xml");
-        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T5)_20151112101057_24.xml");
-        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T6)_20151112101058_25.xml");
-        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T7)_20151112101058_26.xml");
-        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T8)_20151112101059_27.xml");
-        pathDescriptionsSZ160.add("teste6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T9)_20151112101100_28.xml");
+        pathDescriptionsSZ160.add("C:\\StrataDB\\Teste 6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T1)_20151112101055_19.xml");
+        pathDescriptionsSZ160.add("C:\\StrataDB\\Teste 6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T2)_20151112101056_21.xml");
+        pathDescriptionsSZ160.add("C:\\StrataDB\\Teste 6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T3)_20151112101056_22.xml");
+        pathDescriptionsSZ160.add("C:\\StrataDB\\Teste 6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T4)_20151112101057_23.xml");
+        pathDescriptionsSZ160.add("C:\\StrataDB\\Teste 6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T5)_20151112101057_24.xml");
+        pathDescriptionsSZ160.add("C:\\StrataDB\\Teste 6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T6)_20151112101058_25.xml");
+        pathDescriptionsSZ160.add("C:\\StrataDB\\Teste 6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T7)_20151112101058_26.xml");
+        pathDescriptionsSZ160.add("C:\\StrataDB\\Teste 6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T8)_20151112101059_27.xml");
+        pathDescriptionsSZ160.add("C:\\StrataDB\\Teste 6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T9)_20151112101100_28.xml");
         SampleLithology.processWell(pathLogSZ160, pathDescriptionsSZ160);
         
     
         for(LithologyArchiveFormat laf: lithologies){
             laf.saveToArchive();
         }
+        
+        return db;
     
     }
     
@@ -241,6 +248,7 @@ public class SampleLithology {
         
         LASParser parser = new LASParser();    
         ParsedLAS parsed = parser.parseLAS(pathLog);
+        nullValue = parsed.getNullValue();
             
         //FOR EVERY SAMPLE IN THE LAS FILE
         for(int i=0; i<parsed.getLogsList().get(0).getLogValues().size() ; i++){
@@ -251,6 +259,8 @@ public class SampleLithology {
             //SEARCH THE LITHOLOGY IN THE LIST OF XML, IF IT EXISTS
             DiscoverLithology discoverLithology = new DiscoverLithology(pathLog, i, pathDescriptions);
             int lithology = discoverLithology.discover();
+            
+            db.feedDatabase(lithology, OrganizedSample);
             
             //AND GET THE PATH OF LAS AND XML TO IDENTIFY IN THE OUTPUT
             String las = discoverLithology.getLasPath();
@@ -289,6 +299,7 @@ public class SampleLithology {
         }
         return -1;
     }
+    
 
     
     static class DiscoverLithology{
@@ -399,7 +410,7 @@ public class SampleLithology {
         }
     
         public void saveToArchive(){
-            String currentFileString = "teste6\\treino_amostras2\\" + lithologyUID + ".txt";
+            String currentFileString = "Samples Output\\" + lithologyUID + ".txt";
 
             try{
                     PrintWriter writer = new PrintWriter(currentFileString, "UTF-8");
