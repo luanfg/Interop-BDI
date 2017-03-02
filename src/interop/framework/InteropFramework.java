@@ -5,6 +5,10 @@
  */
 package interop.framework;
 
+import interop.lithologyDataCollector.SampleLithology;
+import interop.lithoprototype.model.LithologyDatabase;
+import interop.lithoprototype.model.LithologyPrototype;
+import interop.lithoprototype.model.LogCovarianceMatrix;
 import interop.log.model.LogValuePair;
 import interop.log.model.ParsedLAS;
 import interop.log.model.WellLog;
@@ -19,6 +23,7 @@ import javafx.stage.Stage;
 import interop.log.util.LASParser;
 import interop.log.util.LogValueList;
 import interop.movingMeans.MovingMeans;
+import java.util.List;
 
 
 /**
@@ -46,9 +51,18 @@ public class InteropFramework extends Application {
             }
         }*/
 
-        LASParser parser = new LASParser();    
-        ParsedLAS parsed = parser.parseLAS("FU128.las");
-//        System.out.println(parser.parseLAS("FU128.las").getLogsList().size());
+        
+        /*UNCOMMENT TO GET ACCESS TO AVERAGE VECTOR AND COVARIANCE MATRIX
+        
+        LithologyDatabase database = SampleLithology.main();
+        List<LithologyPrototype> lithologiesPrototypes = database.getLithologiesPrototypes();
+        for(LithologyPrototype lpt:lithologiesPrototypes){
+        
+            List<Double> averageVector = lpt.getAverageVector();
+            List<List<Double>> covarianceMatrix = lpt.getCovarianceMatrix();
+            //LogCovarianceMatrix.printMatrix(covarianceMatrix);
+            
+        }*/
        
         Button btn = new Button();
         btn.setText("Print Logs");
@@ -56,6 +70,8 @@ public class InteropFramework extends Application {
             
             @Override
             public void handle(ActionEvent event) {
+                LASParser parser = new LASParser();    
+                ParsedLAS parsed = parser.parseLAS("FU128.las");
                 DrawGraphics dg = new DrawGraphics(parsed);
                 dg.draw();
             }
