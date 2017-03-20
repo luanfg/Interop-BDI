@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class SampleLithology {
     
-    private static List<String> logTypesWanted;
+    static List<String> logTypesWanted ;
     private static String TAB = "\t"; 
     private static List<LithologyArchiveFormat> lithologies = new ArrayList<>();
     private static LithologyDatabase db;
@@ -244,6 +244,21 @@ public class SampleLithology {
     
     }
     
+    public static List<Double> getSample(int index, String pathLog){
+        LASParser parser = new LASParser();
+        ParsedLAS parsed = parser.parseLAS(pathLog);
+        List<String> organized = new OrganizeSample(parsed, index).Organize();
+        return parseDouble(organized);
+    }
+    
+    private static List<Double> parseDouble(List<String> strings){
+        List<Double> doubles = new ArrayList<>();
+        for(String string:strings){
+            doubles.add(Double.parseDouble(string));
+        }
+        return doubles;
+    }
+    
     static void processWell(String pathLog, List<String> pathDescriptions){
         
         LASParser parser = new LASParser();    
@@ -298,6 +313,12 @@ public class SampleLithology {
             }
         }
         return -1;
+    }
+
+    public static int getNumberOfSamples(String las) {
+        LASParser parser = new LASParser();
+        ParsedLAS parsed = parser.parseLAS(las);
+        return parsed.getLogsList().get(0).getLogValues().size();
     }
     
 
