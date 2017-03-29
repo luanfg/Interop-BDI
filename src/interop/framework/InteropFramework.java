@@ -9,6 +9,7 @@ import interop.lithologyDataCollector.SampleLithology;
 import interop.lithoprototype.model.LithologyDatabase;
 import interop.lithoprototype.model.LithologyPrototype;
 import interop.lithoprototype.model.LogCovarianceMatrix;
+import interop.lithoprototype.model.ProbabilityDensityFunction;
 import interop.log.model.LogValuePair;
 import interop.log.model.ParsedLAS;
 import interop.log.model.WellLog;
@@ -50,19 +51,10 @@ public class InteropFramework extends Application {
                System.out.println();
             }
         }*/
-
+       Extrapolate ext = new Extrapolate("C:\\StrataDB\\Teste 6\\Validacao\\7-CP-0995-SE\\Perfis\\CP995.las");
+       ext.extrapolateCore();
         
-        /*UNCOMMENT TO GET ACCESS TO AVERAGE VECTOR AND COVARIANCE MATRIX
         
-        LithologyDatabase database = SampleLithology.main();
-        List<LithologyPrototype> lithologiesPrototypes = database.getLithologiesPrototypes();
-        for(LithologyPrototype lpt:lithologiesPrototypes){
-        
-            List<Double> averageVector = lpt.getAverageVector();
-            List<List<Double>> covarianceMatrix = lpt.getCovarianceMatrix();
-            //LogCovarianceMatrix.printMatrix(covarianceMatrix);
-            
-        }*/
        
         Button btn = new Button();
         btn.setText("Print Logs");
@@ -94,5 +86,7 @@ public class InteropFramework extends Application {
         
         launch(args);     
     }
+    
+    
     
 }

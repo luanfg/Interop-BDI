@@ -6,6 +6,7 @@
 package interop.lithoprototype.model;
 
 import Jama.*;
+import interop.lithologyDataCollector.SampleLithology;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +21,15 @@ public class ProbabilityDensityFunction {
     Matrix matrixSample;
     List<Integer> invalidIndex;
     
+    
+    
     public ProbabilityDensityFunction(List<Double> sample, List<Double> averageVector, List<List<Double>> covarianceMatrix) {
         invalidIndex = getInvalidIndex(sample, averageVector);
         matrixCovariance = new Matrix(arrayListToMatrix_nxn(covarianceMatrix, invalidIndex));
         matrixAverageVector = new Matrix(arrayListToMatrix_nx1(averageVector,invalidIndex)); 
+       
+        //System.out.println(averageVector);
+        //this.printMatrix(matrixCovariance);
         matrixSample = new Matrix(arrayListToMatrix_nx1(sample,invalidIndex));
     }
     
@@ -36,7 +42,7 @@ public class ProbabilityDensityFunction {
      * @return double representing the probability of that sample to be part of that lithology prototype
      */
     public double calculatePDF(){
-        
+        //this.printAllMatrix();
         double detMatrix = matrixCovariance.det();
         int k = matrixCovariance.getColumnDimension();
         double pi = Math.PI;
@@ -44,12 +50,24 @@ public class ProbabilityDensityFunction {
         
         double fraction = 1.0 / Math.sqrt( Math.pow(2*pi, k) * detMatrix );
         
-        Matrix inverse = matrixCovariance.inverse();
+        Matrix inverse = matrixCovariance.det()!=0 ?  matrixCovariance.inverse() : matrixCovariance;
         Matrix transpose = X_u.transpose();
         
         Matrix result = transpose.times(inverse).times(X_u).times(-0.5);
-                
-        return fraction * Math.exp(result.det());       
+            
+        double finalResult = fraction * Math.exp(result.det());       
+        if(Double.isInfinite(finalResult)){
+            //System.out.println("AQUI DEU INFINITO...");
+            //System.out.println(testandoSample);
+            //this.printAllMatrix();
+        }
+        if(Double.isNaN(finalResult)){
+            //System.out.println("AQUI DEU NaN...");
+            //System.out.println(testandoSample);
+            //this.printAllMatrix();
+        }
+        
+        return finalResult;
     }
     
     /**
@@ -69,6 +87,7 @@ public class ProbabilityDensityFunction {
      * @return cleanMatrix
      */
     private double[][] arrayListToMatrix_nxn(List<List<Double>> matrix, List<Integer> invalidIndex){
+        //System.out.println(matrix.size() + " " + matrix.get(0).size());
         List<List<Double>> newMatrix = new ArrayList<>();
         for(int i=0; i<matrix.size(); i++){
             List<Double> newLine = new ArrayList<>();
@@ -143,8 +162,11 @@ public class ProbabilityDensityFunction {
         double[][] m = new double[newList.size()][1];
         int i=0;
         for(Double v:newList){
-            m[i++][0] = v.isNaN() ? 1.0 : v;
+            m[i++][0] = (v.isNaN() || v.isInfinite() || v==(double)SampleLithology.nullValue) ? 1.0 : v;
         }
+        
+        //System.out.println("VEREMOS... " );
+        
         return m;
     }
 }

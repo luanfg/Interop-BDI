@@ -14,6 +14,7 @@ import java.util.List;
 /** Classe que contém um vetor de médias.
  *  CONTEXTO: Médias de valores de logs referentes a uma litologia
  * @author Bruno Zanette
+ * @author eduardo
  */
 public class LogAverageVector {
     private List<Double> logSum;
@@ -35,7 +36,8 @@ public class LogAverageVector {
         List<Double> averages = new ArrayList<>();
         for(int i=0; i<logSum.size(); i++){
             if(numberOfSamples.get(i)==0){
-                averages.add((double)nullvalue);
+                //averages.add((double)nullvalue);
+                averages.add(Double.NaN);
             }
             else{
                 averages.add( logSum.get(i) / numberOfSamples.get(i) );

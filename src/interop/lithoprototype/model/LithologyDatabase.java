@@ -12,12 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Classe que contém o conjunto de protótipos de litologias (LithologyPrototype).
- *          EM BREVE
  * @author Bruno Zanette
+ * @author eduardo
+ * 
  */
 public class LithologyDatabase {
     private List<LogType> logTypes;
     private List<LithologyPrototype> lithologyPrototypes;
+    
     
     
     public LithologyDatabase(List<String> ltw) {
@@ -35,10 +37,15 @@ public class LithologyDatabase {
         
     }
     
+    /**
+     *
+     * @return list of lithologies prototypes
+     */
     public List<LithologyPrototype> getLithologiesPrototypes(){
-        return lithologyPrototypes;
+        return getOnlyLithologiesWithMoreThan_X_Samples(10, lithologyPrototypes);
     }
     
+    /*
     private int indexLogType(LogType logType)
     {
         
@@ -60,8 +67,13 @@ public class LithologyDatabase {
             return false;
     }
     
-    
+    */
 
+    /**
+     *  Add ( or create and add) a sample to a lithology prototype
+     * @param lithology
+     * @param OrganizedSample
+     */
     public void feedDatabase(int lithology, List<String> OrganizedSample) {
         boolean found = false;
         for(LithologyPrototype lp:lithologyPrototypes){
@@ -79,4 +91,20 @@ public class LithologyDatabase {
             lithologyPrototypes.add(newLP);
         }
     }    
+
+    /*
+    Aparentemente quando usamos protótipos de litologias com poucas amostras encontramos erros no cálculo do pdf
+    então usando protótipos com pelo menos 10 amostras não foram encontrados erros, entretando não garanto que 
+    com outros arquivos esses erros podem ser encontrados.
+    */
+    private List<LithologyPrototype> getOnlyLithologiesWithMoreThan_X_Samples(int x, List<LithologyPrototype> lithologyPrototypes) {
+        List<LithologyPrototype> newList = new ArrayList<>();
+        for(LithologyPrototype lithologyPrototype:lithologyPrototypes){
+            if(lithologyPrototype.getNumberOfSamples()>x){
+                newList.add(lithologyPrototype);
+            }
+        }
+        
+        return newList;
+    }
 }

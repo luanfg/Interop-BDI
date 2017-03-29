@@ -34,36 +34,47 @@ public class LogCovarianceMatrix{
         
     public List<List<Double>> calculateCovarianceMatrix(List<Double> averageVector)
     {
+        
         //WILL COMPARE EVERY LOG WITH EACH OTHER
         for(int logA=0; logA<averageVector.size(); logA++){
             List<Double> line = new ArrayList<>();
             for(int logB=0; logB<averageVector.size(); logB++){
+                               
                 double valueOfCovMatrix = 0.0;
                 double numberOfvalues = 0.0;
                 
                 //CREATE THE COVARIANCE MATRIX AND GET THE AVERAGE VALUE OF IT
                 for(List<String> sample:samples){
-                    
+                    if(samples.size()==1){
+                        System.out.println("DEU MERDA");
+                    }
                     double valueA = Double.parseDouble(sample.get(logA));
                     double averageA = averageVector.get(logA);
                 
                     double valueB = Double.parseDouble(sample.get(logB));
                     double averageB = averageVector.get(logB);
-                        
-                    if(!(valueA==nullValue || averageA==nullValue || valueB==nullValue || averageB==nullValue)){
-                        valueOfCovMatrix += (valueA - averageA) * (valueB - averageB );
+                    //System.out.println(nullValue);
+                    if(valueA!=nullValue && averageA!=nullValue && valueB!=nullValue && averageB!=nullValue
+                            && !Double.isNaN(valueA) && !Double.isNaN(valueB) && !Double.isNaN(averageA) && !Double.isNaN(averageB)){
+                        valueOfCovMatrix += (valueA - averageA) * (valueB - averageB);
                         numberOfvalues += 1.0;
                     }
+                    else{
+                        //System.out.println(averageA + " " + averageB);
+                    }
+                    
                 }
                               
                 //CONSTRUCTING THE MATRIX LINE BY LINE
+                //System.out.println("ADDING " + valueOfCovMatrix / numberOfvalues);
                 line.add(valueOfCovMatrix / numberOfvalues);
             }
             covarianceMatrix.add(line);
             
         }
         //printMatrix(sumCovarianceMatrix);
-        //System.out.println(isEspelhada(covarianceMatrix));
+        if(!isEspelhada(covarianceMatrix))System.out.println("MATRIX NAO ESPELHADA!");
+        //System.out.println(covarianceMatrix);
         return covarianceMatrix;
     }
     

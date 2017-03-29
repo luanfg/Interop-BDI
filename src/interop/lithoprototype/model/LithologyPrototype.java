@@ -17,6 +17,7 @@ public class LithologyPrototype {
     private int lithologyUID;
     private LogAverageVector lithologyLogAverageVector;
     private LogCovarianceMatrix lithologyLogCovarianceMatrix;
+    private int numberOfSamples = 0;
     
     
     LithologyPrototype() {
@@ -59,13 +60,21 @@ public class LithologyPrototype {
      */
     public List<List<Double>> getCovarianceMatrix()
     {
-        return lithologyLogCovarianceMatrix.calculateCovarianceMatrix(getAverageVector());
+        if(this.lithologyLogCovarianceMatrix.getCovarianceMatrix().isEmpty())
+            return lithologyLogCovarianceMatrix.calculateCovarianceMatrix(getAverageVector());
+        else return this.lithologyLogCovarianceMatrix.getCovarianceMatrix();
     }
 
-       
+    /**
+     *
+     * @return The nunber of samples that were used to create that prototype
+     */
+    public int getNumberOfSamples(){
+        return this.numberOfSamples;
+    }
 
     void feedPrototype(List<String> OrganizedSample) {
-        //System.out.println(OrganizedSample);
+        this.numberOfSamples++;
         lithologyLogAverageVector.feedAverageVector(OrganizedSample);
         lithologyLogCovarianceMatrix.feedCovarianceMatrix(OrganizedSample);
     }
