@@ -36,6 +36,8 @@ public class Extrapolate {
         lithologiesPrototypes = database.getLithologiesPrototypes();
         LASParser parser = new LASParser();
         parsed = parser.parseLAS(lasPath);
+        
+        //TODO: mudar essa funcao para receber os break points usando todos os logs (usar algotítmo pag. 30 http://www.lume.ufrgs.br/bitstream/handle/10183/110336/000952622.pdf;sequence=1 )
         changePoints = BeddingDiscriminator.findChangePoints(parsed.getLogsList().get(1).getLogValues());
     }
     

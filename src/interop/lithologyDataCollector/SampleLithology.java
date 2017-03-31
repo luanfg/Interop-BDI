@@ -1,4 +1,4 @@
-/*
+/* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -41,6 +41,7 @@ public class SampleLithology {
     
     public static LithologyDatabase main()
     {  
+        //SELECIONA QUAIS TIPOS DE LOG QUERES PROCESSAR
         logTypesWanted = new ArrayList<>();
         //logTypesWanted.add("DEPT");
         logTypesWanted.add("DT");
@@ -55,6 +56,8 @@ public class SampleLithology {
         logTypesWanted.add("MSFL");
         
         db = new LithologyDatabase(logTypesWanted);
+        
+        //E QUAIS ARQUIVOS, BASTA DESCOMENTAR
         
      /* //TESTE 1 TREINO
         String pathLogNA04 = "C:\\StrataDB\\Teste 1\\Treino\\NA04.las";
@@ -170,7 +173,7 @@ public class SampleLithology {
         ESS23.add("C:\\\\StrataDB\\\\Teste 5\\Treino\\ESS023_RANGEL_T6_20141027145430.xml");
         SampleLithology.processWell(pathLogESS23, ESS23);
     */
-    ///*
+    /*
       //TESTE 6 TREINO
         String pathLogCP1847 = "C:\\\\StrataDB\\\\Teste 6\\Treino\\3-CP-1847-SE\\Perfis\\CP1847.las";
         List<String> pathDescriptionsCP1847 = new ArrayList<>(); 
@@ -225,8 +228,8 @@ public class SampleLithology {
         pathDescriptionsSZ160.add("C:\\\\StrataDB\\\\Teste 6\\Treino\\9-SZ-0160-SE\\9-SZ-0160-SE_(T32)_20151112101052_12.xml");
         pathDescriptionsSZ160.add("C:\\\\StrataDB\\\\Teste 6\\Treino\\9-SZ-0160-SE\\9-SZ-0160-SE_(T33)_20151112101052_13.xml");
         SampleLithology.processWell(pathLogSZ160, pathDescriptionsSZ160);
-     //*/
-    /*
+     */
+    ///*
     //TESTE 6 VALIDACAO
         String pathLogsCP995 = "C:\\StrataDB\\Teste 6\\Validacao\\7-CP-0995-SE\\Perfis\\CP995.las";
         List<String> pathDescriptionsCP995 = new ArrayList<>(); 
@@ -240,7 +243,7 @@ public class SampleLithology {
         pathDescriptionsCP995.add("C:\\StrataDB\\Teste 6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T8)_20151112101059_27.xml");
         pathDescriptionsCP995.add("C:\\StrataDB\\Teste 6\\Validacao\\7-CP-0995-SE\\7-CP-0995-SE_(T9)_20151112101100_28.xml");
         SampleLithology.processWell(pathLogsCP995, pathDescriptionsCP995);
-      */
+      //*/
       /*  
         String pathLog7CP1382DSE = "C:\\StrataDB\\NovosPocos\\7-CP-1382D-SE\\Perfil\\CP1382.las";
         List<String> pathDescriptions7CP1382DSE = new ArrayList<>();
@@ -258,6 +261,7 @@ public class SampleLithology {
         SampleLithology.processWell(pathLogCP1394, pathDescriptionsCP1394);
         */
 
+        //COMENTAR PARA GRAVAR EM ARQUIVO .TXT
         LithologyArchiveFormat.initializeWriter();
         for(LithologyArchiveFormat laf: lithologies){
             laf.saveToArchive();
@@ -306,6 +310,8 @@ public class SampleLithology {
             //SEARCH THE LITHOLOGY IN THE LIST OF XML, IF IT EXISTS
             DiscoverLithology discoverLithology = new DiscoverLithology(pathLog, i, pathDescriptions);
             int lithology = discoverLithology.discover();
+            //int lithology = discoverLithology.fast_discover();
+            //System.out.println(lithology2 + " AND " + lithology);
             
             if(lithology!=0)
                 db.feedDatabase(lithology, OrganizedSample);
@@ -372,12 +378,48 @@ public class SampleLithology {
         int sortingID;
         int sphericityID;
         
+        //testing the fast_discover
+        static List<StratigraphicDescription> stratigraphicDescriptions = null;
+        static StratigraphicDescription stratigraphicDescription;
+        static DepositionalFacies facie;
+        static int i=0; //indexOfWhichXmlFileWeAreLooking;
+        static int j=0;//indexOfStratigraphicDescriptionList;
+        static int k=0;//indexOfDepositionalFaciesList;
+        
+        
         public DiscoverLithology(String lasPath, int index, List<String> path){
             LASParser parser = new LASParser();    
             ParsedLAS parsed = parser.parseLAS(lasPath);
             this.pathDescriptions = path;
             this.depthLAS = parsed.getLogsList().get(0).getLogValues().get(index).getDepth();
-            lasFound = lasPath; 
+            lasFound = lasPath;
+            
+            if(stratigraphicDescriptions==null){
+                stratigraphicDescriptions = XMLReader.readStratigraphicDescriptionXML(path.get(0));
+                facie = stratigraphicDescriptions.get(0).getFaciesList().get(0);
+                mmTOm(facie);
+            }
+        }
+        
+        
+
+        private DepositionalFacies nextDepositionalFacie() {
+            if(k < stratigraphicDescriptions.get(j).getFaciesList().size() -1 )
+                return stratigraphicDescriptions.get(j).getFaciesList().get(++k);
+            else{
+                k=0;
+                if( j < stratigraphicDescriptions.size()-1)
+                    return stratigraphicDescriptions.get(++j).getFaciesList().get(k);
+                else{
+                    k=0;
+                    j=0;
+                    if( i < pathDescriptions.size()-1){
+                        stratigraphicDescriptions = XMLReader.readStratigraphicDescriptionXML(pathDescriptions.get(++i));
+                        return stratigraphicDescriptions.get(j).getFaciesList().get(k);
+                    }
+                    else return null;
+                }
+            }
         }
         
         public String getLasPath(){
@@ -389,6 +431,34 @@ public class SampleLithology {
         }
         public String getLithologyName(){
             return this.LithologyName;
+        }
+        
+        
+        public int fast_discover()
+        //same as the discover() method but with the ideia that each xml file is readed only once, but the results are the same
+        {
+            if(facie==null)
+                return 0;
+            if(facie.getBottomMeasure()>= depthLAS && facie.getTopMeasure()<depthLAS){
+                   //GET THE LITHOLOGY AND THE XML IT WAS FOUND
+                    xmlFound = pathDescriptions.get(i);
+                    LithologyName = facie.getLithology().getValue();
+                    grainSize = facie.getGrainSize().getValue();
+                    grainSizeID = facie.getGrainSize().getId();
+                    roundnessID = facie.getRoundness().getId();
+                    sortingID = facie.getSorting().getId();
+                    sphericityID = facie.getSphericity().getId();
+                    return facie.getLithology().getId();
+            }
+            else if(depthLAS > facie.getBottomMeasure()){
+                    facie = this.nextDepositionalFacie();
+                    if(facie==null)
+                        return 0;
+                    mmTOm(facie);
+                    return fast_discover();
+            }
+            
+            return 0;
         }
         
         public int discover(){
@@ -413,7 +483,6 @@ public class SampleLithology {
                             sortingID = facie.getSorting().getId();
                             sphericityID = facie.getSphericity().getId();
                             
-                            //System.out.println(" LITHO? " + grainSizeID );
                             return facie.getLithology().getId();
                         }
                     }
@@ -431,6 +500,14 @@ public class SampleLithology {
         }
         return depositionalFacies;
     }
+    
+    private static DepositionalFacies mmTOm(DepositionalFacies dp)
+    {
+        dp.setBottomMeasure(dp.getBottomMeasure()/1000);
+        dp.setTopMeasure(dp.getTopMeasure()/1000);
+        return dp;
+    }
+    
     }
           
     static class OrganizeSample{
@@ -481,7 +558,6 @@ public class SampleLithology {
             this.specificLog = new ArrayList<>();
             specificLog.add(sample);
             lithologyUID = UID;
-            //if(writer==null) initializeWriter();
         }
         
         public static void initializeWriter(){
@@ -506,11 +582,9 @@ public class SampleLithology {
             writer.close();
         }
         
+        //ATENTION: clean the folder of results before resaving samples, or it will save at the end
         public void saveToArchive(){
-            
-            
-            //writer.println();
-                                      
+                                               
             for(List<String> sample:specificLog){
                 for(String data:sample){
                     writer.print(data);
@@ -519,8 +593,7 @@ public class SampleLithology {
                 }
                 writer.println();
             }
-            //writer.close();
-            
+             
         }
     }
 }
